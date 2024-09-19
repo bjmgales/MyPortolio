@@ -1,16 +1,9 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = MyProjects;
-var _react = require("react");
-var _stockage = require("./stockage");
-var _copy = _interopRequireDefault(require("./assets/copy.svg"));
-var _mac = _interopRequireDefault(require("./assets/mac.svg"));
-var _windows = _interopRequireDefault(require("./assets/windows.svg"));
-var _linux = _interopRequireDefault(require("./assets/linux.svg"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+import { useEffect, useState, useRef, useMemo } from "react";
+import { myProj } from "./stockage";
+import copy from './assets/copy.svg';
+import macIcon from './assets/mac.svg';
+import windowsIcon from './assets/windows.svg';
+import linuxIcon from './assets/linux.svg';
 const Title = _ref => {
   let {
     macLinuxOnly,
@@ -22,13 +15,13 @@ const Title = _ref => {
     }
   }, /*#__PURE__*/React.createElement("h1", null, projectTitle.toUpperCase()), /*#__PURE__*/React.createElement("img", {
     className: "osIcons",
-    src: _linux.default
+    src: linuxIcon
   }), /*#__PURE__*/React.createElement("img", {
     className: "osIcons",
-    src: _mac.default
+    src: macIcon
   }), !macLinuxOnly && /*#__PURE__*/React.createElement("img", {
     className: "osIcons",
-    src: _windows.default
+    src: windowsIcon
   }));
 };
 const Steps = _ref2 => {
@@ -41,7 +34,7 @@ const Steps = _ref2 => {
     mobileFormat,
     videoRef
   } = _ref2;
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     if (videoRef.current) videoRef.current.closest('div').style.maxHeight = 'fit-content';
   });
   return project.steps.map((elem, elemIndex) => {
@@ -92,9 +85,9 @@ const Video = _ref3 => {
     mobileFormat = false,
     offMobile = false
   } = _ref3;
-  const [className, setClassName] = (0, _react.useState)("");
-  const [isMounted, setIsMounted] = (0, _react.useState)(false);
-  (0, _react.useEffect)(() => {
+  const [className, setClassName] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
     isMounted ? isVisible ? setClassName('video show') : setClassName('video') : setIsMounted(true);
     !document.querySelector('video').classList.contains(['show', 'video']) && isVisible ? setClassName('video show') : null;
   }, [isVisible]);
@@ -115,8 +108,8 @@ const GithubLink = _ref4 => {
     github,
     mobileFormat = false
   } = _ref4;
-  const [checkmarkToggler, setCheckmarkToggler] = (0, _react.useState)(false);
-  (0, _react.useEffect)(() => {
+  const [checkmarkToggler, setCheckmarkToggler] = useState(false);
+  useEffect(() => {
     const t = setTimeout(() => {
       setCheckmarkToggler(false);
     }, 2000);
@@ -140,26 +133,26 @@ const GithubLink = _ref4 => {
     }
   }, /*#__PURE__*/React.createElement("img", {
     className: "copySvg",
-    src: _copy.default,
+    src: copy,
     alt: "Copy to clipboard",
     title: "Copy to clipboard"
   })))), /*#__PURE__*/React.createElement("span", {
     className: checkmarkToggler ? "okCpy" : "okCpy hide"
   }, "\u2705"));
 };
-function MyProjects(props) {
-  const videoRef = (0, _react.useRef)(null);
-  const [mobileFormat, setMobileFormat] = (0, _react.useState)(window.innerWidth <= 1600 ? true : false);
-  const [openDescIndex, setOpenDescIndex] = (0, _react.useState)(-1);
-  const [vidIndex, setVidIndex] = (0, _react.useState)(-1);
-  const [isVideoVisible, setIsVideoVisible] = (0, _react.useState)(false);
-  const [offMobile, setOffMobile] = (0, _react.useState)(false);
-  const stepsContainerRef = (0, _react.useRef)(null);
-  const stepRef = (0, _react.useRef)(null);
-  const timeoutRef = (0, _react.useRef)(null);
-  const createProjectMap = (0, _react.useMemo)(() => {
+export default function MyProjects(props) {
+  const videoRef = useRef(null);
+  const [mobileFormat, setMobileFormat] = useState(window.innerWidth <= 1600 ? true : false);
+  const [openDescIndex, setOpenDescIndex] = useState(-1);
+  const [vidIndex, setVidIndex] = useState(-1);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [offMobile, setOffMobile] = useState(false);
+  const stepsContainerRef = useRef(null);
+  const stepRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const createProjectMap = useMemo(() => {
     const map = new Map();
-    _stockage.myProj[0]?.submenu?.forEach(elem => {
+    myProj[0]?.submenu?.forEach(elem => {
       if (elem.submenu) {
         elem.submenu.forEach(subItem => {
           map.set(subItem.title, subItem);
@@ -167,7 +160,7 @@ function MyProjects(props) {
       }
     });
     return map;
-  }, [_stockage.myProj]);
+  }, [myProj]);
   const project = createProjectMap.get(props.changePage.name);
   const descToggler = async (e, index) => {
     stepRef.current = e.target.closest("div");
@@ -185,7 +178,7 @@ function MyProjects(props) {
     setVidIndex(openDescIndex);
     if (toggler === "in") setIsVideoVisible(true);
   };
-  (0, _react.useEffect)(e => {
+  useEffect(e => {
     const video = videoRef.current;
     let animIn;
     if (openDescIndex < 0) {
@@ -223,7 +216,7 @@ function MyProjects(props) {
       };
     }
   }, [openDescIndex]);
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     const handleResize = () => {
       window.innerWidth <= 1600 ? setMobileFormat(true) : setMobileFormat(false);
     };
@@ -232,7 +225,7 @@ function MyProjects(props) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     if (props.changePage.change) {
       return;
     }

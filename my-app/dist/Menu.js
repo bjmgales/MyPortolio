@@ -1,17 +1,8 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _react = _interopRequireWildcard(require("react"));
-var _Keyframes = _interopRequireDefault(require("./Keyframes"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const Menu = /*#__PURE__*/_react.default.memo(function Menu(props) {
-  const [hasMenuAnimEnd, setHasMenuAnimEnd] = (0, _react.useState)(false);
-  const [cleanAndDisplay, setCleanAndDisplay] = (0, _react.useState)({
+import React, { useEffect, useState } from "react";
+import createKeyframes from "./Keyframes";
+const Menu = /*#__PURE__*/React.memo(function Menu(props) {
+  const [hasMenuAnimEnd, setHasMenuAnimEnd] = useState(false);
+  const [cleanAndDisplay, setCleanAndDisplay] = useState({
     clean: false,
     link: ''
   });
@@ -29,7 +20,7 @@ const Menu = /*#__PURE__*/_react.default.memo(function Menu(props) {
     const menu = e.target.lastChild;
     menu.style.animation = "tooltipHide 2s forwards";
   };
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     if (!cleanAndDisplay.clean) return;
     const toHide = document.querySelectorAll('.clean');
     toHide.forEach(element => {
@@ -53,14 +44,14 @@ const Menu = /*#__PURE__*/_react.default.memo(function Menu(props) {
     }, 500);
   }, [cleanAndDisplay.clean]);
   const submenuHandler = (submenu, key) => {
-    return /*#__PURE__*/_react.default.createElement("ul", {
+    return /*#__PURE__*/React.createElement("ul", {
       className: "submenu"
     }, submenu.map((subitem, subIndex) => {
       const uKey = `${subitem.title}`;
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         className: "nestedMenu",
         key: `div-${uKey}#${subIndex}`
-      }, /*#__PURE__*/_react.default.createElement("li", {
+      }, /*#__PURE__*/React.createElement("li", {
         key: uKey,
         subtext: subitem.subtext ? subitem.subtext : '',
         onMouseOver: subitem.subtext ? showTooltip : null,
@@ -75,7 +66,7 @@ const Menu = /*#__PURE__*/_react.default.memo(function Menu(props) {
           fontSize: "0.5em"
         } : null,
         onAnimationEnd: handleAnimState
-      }, subitem.title, subitem.submenu && submenuHandler(subitem.submenu, uKey), subitem.subtext && /*#__PURE__*/_react.default.createElement("span", {
+      }, subitem.title, subitem.submenu && submenuHandler(subitem.submenu, uKey), subitem.subtext && /*#__PURE__*/React.createElement("span", {
         key: `span-${uKey}`,
         className: "tooltip"
       }, subitem.subtext)));
@@ -102,18 +93,18 @@ const Menu = /*#__PURE__*/_react.default.memo(function Menu(props) {
       submenu.className = 'submenu close';
     }
   };
-  return /*#__PURE__*/_react.default.createElement("ul", {
+  return /*#__PURE__*/React.createElement("ul", {
     id: props.id,
     className: "dropdown"
   }, props.items.map((item, index) => {
     const key = `${item.title}#${index}`;
-    return /*#__PURE__*/_react.default.createElement("li", {
+    return /*#__PURE__*/React.createElement("li", {
       className: "outerMenu",
       key: key,
       onClick: toggleSubmenu
-    }, item.title, item.submenu && submenuHandler(item.submenu, `${item.title}#${index}`), item.subtext && /*#__PURE__*/_react.default.createElement("span", {
+    }, item.title, item.submenu && submenuHandler(item.submenu, `${item.title}#${index}`), item.subtext && /*#__PURE__*/React.createElement("span", {
       className: "tooltip"
     }, "toto"));
   }));
 });
-var _default = exports.default = Menu;
+export default Menu;

@@ -1,19 +1,13 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = MyDocuments;
-var _react = require("react");
-function MyDocuments(props) {
-  (0, _react.useEffect)(() => {
+import { useEffect } from "react";
+export default function MyDocuments(props) {
+  useEffect(() => {
     if (!props.changePage.change) {
       return;
     }
     document.querySelector('.doc').classList.add('visible');
     document.querySelector('.docContainer').classList.add('visible');
   }, [props.changePage.change]);
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     if (props.changePage.change) return;
     document.querySelector('.doc').classList.remove('visible');
     document.querySelector('.docContainer').classList.remove('visible');

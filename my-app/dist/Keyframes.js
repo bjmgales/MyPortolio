@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.createKeyframesOut = exports.createKeyframesIn = void 0;
-const createKeyframesIn = (startX, startY, endX, endY, animation, opacity, scale) => {
+export const createKeyframesIn = (startX, startY, endX, endY, animation, opacity, scale) => {
   const style = document.createElement('style');
   document.head.appendChild(style);
   const keyframes = `
@@ -24,8 +18,7 @@ const createKeyframesIn = (startX, startY, endX, endY, animation, opacity, scale
     `;
   style.sheet.insertRule(keyframes, style.sheet.cssRules.length);
 };
-exports.createKeyframesIn = createKeyframesIn;
-const createKeyframesOut = (startX, startY, endX, endY, animation, opacity, scale) => {
+export const createKeyframesOut = (startX, startY, endX, endY, animation, opacity, scale) => {
   const style = document.createElement('style');
   document.head.appendChild(style);
   const keyframes = `
@@ -45,5 +38,4 @@ const createKeyframesOut = (startX, startY, endX, endY, animation, opacity, scal
     `;
   style.sheet.insertRule(keyframes, style.sheet.cssRules.length);
 };
-exports.createKeyframesOut = createKeyframesOut;
-var _default = exports.default = null;
+export default null;

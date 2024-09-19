@@ -1,21 +1,15 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.myProj = exports.myDoc = exports.links = exports.animationName = void 0;
-const animationName = exports.animationName = {
+export const animationName = {
   gitFadeIn: "fadeInGit 3s ease-in forwards",
   gitFadeOut: "fadeOutGit 3s ease-in forwards",
   linkedinFadeIn: "fadeInLinkedin 3s ease-in forwards",
   linkedinFadeOut: "fadeOutLinkedin 3s ease-in forwards"
 };
-const links = exports.links = {
+export const links = {
   git: "https://github.com/bjmgales",
   linkedin: "https://linkedin.com/in/benjamin-gales-767873276",
   fortytwo: "https://www.42network.org/"
 };
-const myDoc = exports.myDoc = [{
+export const myDoc = [{
   title: "MY DOCUMENTS",
   submenu: [{
     title: "Resumee",
@@ -41,7 +35,7 @@ const myDoc = exports.myDoc = [{
     }]
   }]
 }];
-const myProj = exports.myProj = [{
+export const myProj = [{
   title: "MY PROJECTS",
   submenu: [{
     title: "C",

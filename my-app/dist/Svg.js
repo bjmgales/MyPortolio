@@ -1,12 +1,7 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Svg;
-var _react = require("react");
-var _Keyframes = require("./Keyframes");
-function Svg(_ref) {
+import { useState, useEffect, useRef } from "react";
+import { createKeyframesIn } from "./Keyframes";
+import { createKeyframesOut } from "./Keyframes";
+export default function Svg(_ref) {
   let {
     imHovered = () => {},
     imOut = () => {},
@@ -14,10 +9,10 @@ function Svg(_ref) {
     noAnim = false,
     ...props
   } = _ref;
-  const elem = (0, _react.useRef)(null);
-  const [hasFadeInEnd, setFadeInEnd] = (0, _react.useState)(false);
-  const [hasFadeOutEnd, setFadeOutEnd] = (0, _react.useState)(false);
-  const [style, setStyle] = (0, _react.useState)({
+  const elem = useRef(null);
+  const [hasFadeInEnd, setFadeInEnd] = useState(false);
+  const [hasFadeOutEnd, setFadeOutEnd] = useState(false);
+  const [style, setStyle] = useState({
     position: "absolute",
     left: 0,
     animation: ""
@@ -35,7 +30,7 @@ function Svg(_ref) {
   function fadeOut() {
     if (noAnim) return;
     let animation = `${props.className}FadeOut`;
-    (0, _Keyframes.createKeyframesOut)(props.pos_x, props.pos_y, props.hide_x, props.hide_y, animation, [1, 0], [1, 0]);
+    createKeyframesOut(props.pos_x, props.pos_y, props.hide_x, props.hide_y, animation, [1, 0], [1, 0]);
     setStyle(prev => ({
       ...prev,
       animation: `${animation} 1s linear forwards`
@@ -44,13 +39,13 @@ function Svg(_ref) {
   function fadeIn() {
     if (noAnim) return;
     let animation = `${props.className}FadeIn`;
-    (0, _Keyframes.createKeyframesIn)(props.hide_x, props.hide_y, props.pos_x, props.pos_y, animation, [0, 1], [10, 1]);
+    createKeyframesIn(props.hide_x, props.hide_y, props.pos_x, props.pos_y, animation, [0, 1], [10, 1]);
     setStyle(prev => ({
       ...prev,
       animation: `${animation} 1s linear forwards`
     }));
   }
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     const currentElem = elem.current;
     const handleAnimationEnd = event => {
       if (event.animationName === `${props.className}FadeIn`) {
@@ -67,7 +62,7 @@ function Svg(_ref) {
       currentElem.removeEventListener("animationend", handleAnimationEnd);
     };
   }, []);
-  (0, _react.useEffect)(() => {
+  useEffect(() => {
     if (props.isOtherHovered && hasFadeInEnd) {
       fadeOut();
     } else if (!props.isOtherHovered && hasFadeOutEnd) {
