@@ -69,11 +69,11 @@ const Video = ({src, isVisible, videoRef, mobileFormat = false, offMobile=false}
     const [className, setClassName] = useState("");
     const [isMounted, setIsMounted] = useState(false);
 
-
     useEffect(()=>{
         isMounted ? ( isVisible ? setClassName('video show') : setClassName('video') ) : (setIsMounted(true));
+        /* eslint-disable-next-line no-unused-expressions */
         !document.querySelector('video').classList.contains(['show', 'video']) && isVisible ? setClassName('video show') : null;
-    }, [isVisible])
+    }, [isVisible]);
 
     console.log('here', className)
     return (
