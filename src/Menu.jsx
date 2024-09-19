@@ -33,11 +33,9 @@ const Menu = React.memo(function Menu(props) {
         const lmenu = document.querySelector('.leftMenu')
         const rmenu = document.querySelector('.rightMenu')
         lmenu.style.animation = 'none';
-        /* eslint-disable-next-line no-unused-expressions */
         lmenu.offsetHeight; //force reflow
         lmenu.style.animation = "fadeInLeft 0.5s forwards reverse ease";
         rmenu.style.animation = 'none';
-        /* eslint-disable-next-line no-unused-expressions */
         rmenu.offsetHeight; //force reflow
         rmenu.style.animation = "fadeInRight 0.5s forwards reverse ease";
         setTimeout(()=>{

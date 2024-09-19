@@ -3,7 +3,7 @@ import Svg from "./Svg"
 
 
 import me from './assets/bjm.jpg';
-import github from './assets/github.svg';
+import github from './assets/Github.svg';
 import linkedin from './assets/linkedin.svg';
 import fortytwo from './assets/42_Logo.svg';
 import ouch from './assets/sounds/aie0.mp3'
