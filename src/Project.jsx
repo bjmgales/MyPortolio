@@ -4,7 +4,7 @@ import copy from './assets/copy.svg'
 import macIcon from './assets/mac.svg'
 import windowsIcon from './assets/windows.svg'
 import linuxIcon from './assets/linux.svg'
-
+import { pushHistory } from "./nav";
 
 const Title = ({macLinuxOnly, projectTitle}) =>{
     return(
@@ -75,14 +75,17 @@ const Video = ({src, isVisible, videoRef, mobileFormat = false, offMobile=false}
         !document.querySelector('video').classList.contains(['show', 'video']) && isVisible ? setClassName('video show') : null;
     }, [isVisible])
 
-    console.log('here', className)
     return (
         <div className={mobileFormat ? 'videoContainer mobile' : 'videoContainer'}>
-                    <video
-                    ref={videoRef}
-                    className={!mobileFormat ? (offMobile ? 'video hide' : className) : className}
-                    src={"./src/assets/video/" + src + ".mp4"}
-                    type="mp4" autoPlay loop/>
+                        <video
+                        ref={videoRef}
+                        preload="auto"
+                        className={!mobileFormat ? (offMobile ? 'video hide' : className) : className}
+                        src={"/assets/video/" + src + ".mp4"}
+                        type="mp4"
+                        webkitplaysinline='true'
+                        playsInline
+                        autoPlay loop/>
         </div>
     )
 }
@@ -118,10 +121,9 @@ const GithubLink = ({github, mobileFormat = false}) =>{
         </div>
     )
 }
-export default function MyProjects(props){
+export default function MyProjects({mobileFormat = false, ...props}){
 
     const   videoRef = useRef(null)
-    const   [mobileFormat, setMobileFormat] = useState(window.innerWidth <= 1600 ? true : false)
     const   [openDescIndex, setOpenDescIndex] = useState(-1);
     const   [vidIndex, setVidIndex] = useState(-1);
     const   [isVideoVisible, setIsVideoVisible] = useState(false);
@@ -156,7 +158,6 @@ export default function MyProjects(props){
             else
                 setOffMobile(false);
 
-            console.log(newIndex);
             return newIndex;
         })
     }
@@ -207,16 +208,6 @@ export default function MyProjects(props){
     },  [openDescIndex])
 
     useEffect(()=>{
-        const handleResize = () =>{
-            window.innerWidth <= 1600 ? setMobileFormat(true) : setMobileFormat(false);
-        }
-        window.addEventListener('resize', handleResize);
-        return (()=>{
-            window.removeEventListener('resize', handleResize);
-        })
-    }, [])
-
-    useEffect(()=>{
         if (props.changePage.change){
             return;
         }
@@ -230,6 +221,10 @@ export default function MyProjects(props){
         }, 1000)
         return (()=>{clearTimeout(t)});
     },[props.changePage.change])
+
+    useEffect(()=>{
+        pushHistory('/' + props.changePage.name.replace(/\s+/g, ''))
+    }, [])
 
     //JSX
     const stepProps = { project, openDescIndex, descToggler, isVideoVisible, mobileFormat, vidIndex, videoRef};

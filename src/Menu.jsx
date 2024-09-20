@@ -13,12 +13,13 @@ const Menu = React.memo(function Menu(props) {
     }
 
     const showTooltip = async(e) =>{
-        if(!hasMenuAnimEnd) return;
+        if(!hasMenuAnimEnd || props.mobileFormat) return;
         const menu = e.target.lastChild;
         menu.style.visibility = 'visible';
         menu.style.animation = "tooltipShow 1s forwards";
     }
     const hideTooltip = async(e) =>{
+        if (props.mobileFormat) return;
         const menu = e.target.lastChild;
         menu.style.animation = "tooltipHide 2s forwards";
     }
@@ -27,8 +28,9 @@ const Menu = React.memo(function Menu(props) {
         if (!cleanAndDisplay.clean) return;
         const toHide = document.querySelectorAll('.clean');
         toHide.forEach(element => {
-            element.style.transition = 'transform 0.5s';
-            element.style.transform = 'scale(0.00001)'
+            element.style.transition = 'transform 0.8s';
+            element.style.transformOrigin = 'center';
+            element.style.transform = 'translateY(-100vh)'
         });
         const lmenu = document.querySelector('.leftMenu')
         const rmenu = document.querySelector('.rightMenu')
@@ -41,8 +43,13 @@ const Menu = React.memo(function Menu(props) {
         setTimeout(()=>{
             props.setChangePage({change: true, name: cleanAndDisplay.link});
             props.setHideHome(true);
-        }, 500)
+        }, 800)
     }, [cleanAndDisplay.clean])
+
+    // useEffect(()=>{
+    //     history.pushState(null, '', '/');
+    //     console.log('testHome')
+    // }, [])
 
     const submenuHandler = (submenu, key) =>{
         return(

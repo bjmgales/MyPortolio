@@ -4,17 +4,32 @@ import MyDocuments from "./Doc";
 import MyProjects from "./Project";
 import backArrow from './assets/back_arrow.svg'
 import Svg from "./Svg";
+import {navigation} from "./nav";
+import {pushHistory} from "./nav";
+
 
 export default function MainComp(){
     const [hideHome, setHideHome] = useState(false);
     const [hidePage, setHidePage] = useState(true);
+    const [mobileFormat, setMobileFormat] = useState(window.innerWidth <= 1600);
     const [changePage, setChangePage] = useState({
         change: false,
         name: ""
     });
 
-    useEffect(()=>{hideHome ? setHidePage(false) : setHidePage(true); console.log(changePage.change)}, [hideHome])
+    const handleRedirect = ()=>{navigation(setHideHome, setHidePage, setChangePage);}
+    const handleResize = () => {setMobileFormat(window.innerWidth <= 1600);}
 
+    useEffect(() =>{
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('popstate', handleRedirect);
+        return (()=>{
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('popstate', handleRedirect);
+        })
+    }, [])
+
+    useEffect(()=>{hideHome ? setHidePage(false) : setHidePage(true);   }, [hideHome])
 
     return(
 
@@ -26,7 +41,7 @@ export default function MainComp(){
 
             {
                 !hideHome &&
-                 <Profile setChangePage={setChangePage} changePage={changePage} setHideHome={setHideHome}/>
+                 <Profile setChangePage={setChangePage} changePage={changePage} setHideHome={setHideHome} mobileFormat={mobileFormat}/>
             }
 
         {
@@ -42,9 +57,9 @@ export default function MainComp(){
             </div>
             {
                 changePage.name.includes("mydoc") ?
-                    <MyDocuments changePage={changePage} hidePage={hidePage} setHideHome={setHideHome} setChangePage={setChangePage}/> :
+                    <MyDocuments changePage={changePage} hidePage={hidePage} setHideHome={setHideHome} setChangePage={setChangePage} mobileFormat={mobileFormat}/> :
                     <div className={'projDiv'}>
-                        <MyProjects changePage={changePage} hidePage={hidePage} setHideHome={setHideHome} setChangePage={setChangePage}/>
+                        <MyProjects changePage={changePage} hidePage={hidePage} setHideHome={setHideHome} setChangePage={setChangePage} mobileFormat={mobileFormat}/>
                     </div>
             }
             </>
@@ -53,5 +68,4 @@ export default function MainComp(){
         </div>
     )
 }
-
 

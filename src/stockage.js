@@ -21,12 +21,12 @@ export const myDoc = [
                     {
                         title: "English resumee",
                         subtext: "My resumee in Common tongue",
-                        link: "./src/assets/mydoc/Cv-en.pdf"
+                        link: "/assets/mydoc/Cv-en.pdf"
                     },
                     {
                         title: "French resumee",
                         subtext: "My resumee in 🥖",
-                        link: "./src/assets/mydoc/Cv-fr.pdf"
+                        link: "/assets/mydoc/Cv-fr.pdf"
                     }
                 ]
             },
@@ -36,12 +36,12 @@ export const myDoc = [
                     {
                         title: "English cover letter",
                         subtext: "My cover letter in Common tongue",
-                        link: "./src/assets/mydoc/Motiv-en.pdf"
+                        link: "/assets/mydoc/Motiv-en.pdf"
                     },
                     {
                         title: "French cover letter",
                         subtext: "My cover letter in 🥖",
-                        link: "./src/assets/mydoc/Motiv-fr.pdf"
+                        link: "/assets/mydoc/Motiv-fr.pdf"
                     }
                 ]
             }

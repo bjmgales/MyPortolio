@@ -13,15 +13,14 @@ import ouchhhh from './assets/sounds/aie3.mp3'
 import { links } from "./stockage";
 import { myDoc, myProj } from "./stockage"
 import Menu from "./Menu";
+import { pushHistory } from "./nav";
 
 export default function Profile(props) {
 
     const rightMenuRef = useRef(null);
     const [gitFadeOut, setGitFadeOut] = useState(false);
     const [linkedinFadeOut, setLinkedinFadeOut] = useState(false);
-    const [mobileFormat, setMobileFormat] = useState(window.innerWidth <= 1600);
 
-    const handleResize = () => {setMobileFormat(window.innerWidth <= 1600);}
     const handleMeClick = () => {
         const ouchStack = [
             new Audio(ouch),
@@ -36,22 +35,15 @@ export default function Profile(props) {
           document.querySelector('#MyPic').style.transform = "scale(2)";
           document.querySelector('#MyPic').style.transition = "transform 1.5s";
         }, 50);
-
+        pushHistory('/')
         return () => clearTimeout(timer);
       }, []);
-
-    useEffect(() =>{
-        window.addEventListener('resize', handleResize);
-        return (()=>{
-            window.removeEventListener('resize', handleResize);
-        })
-    }, [])
 
     useEffect(()=>{
         const leftMenu = document.querySelector('.leftMenu')
         const rightMenu = document.querySelector('.rightMenu')
         const parent = document.querySelector('.menuContainer')
-        if (mobileFormat){
+        if (props.mobileFormat){
             leftMenu.style.position = 'static';
             rightMenu.style.position = 'static';
             parent.classList.add('menuRef');
@@ -61,7 +53,7 @@ export default function Profile(props) {
             rightMenu.style.position = 'absolute';
             parent.classList.remove('menuRef');
         }
-    }, [mobileFormat])
+    }, [props.mobileFormat])
 
 
     return (
@@ -122,13 +114,15 @@ export default function Profile(props) {
                     <Menu items={myProj}
                     setChangePage={props.setChangePage}
                     changePage={props.changePage}
-                    setHideHome={props.setHideHome}/>
+                    setHideHome={props.setHideHome}
+                    mobileFormat={props.mobileFormat}/>
                 </div>
                 <div className="rightMenu">
                     <Menu items={myDoc}
                     setChangePage={props.setChangePage}
                     changePage={props.changePage}
-                    setHideHome={props.setHideHome}/>
+                    setHideHome={props.setHideHome}
+                    mobileFormat={props.mobileFormat}/>
                 </div>
             </div>
         </>
