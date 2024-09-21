@@ -115,6 +115,7 @@ export default function Profile(props) {
                     setChangePage={props.setChangePage}
                     changePage={props.changePage}
                     setHideHome={props.setHideHome}
+                    setHidePage={props.setHidePage}
                     mobileFormat={props.mobileFormat}/>
                 </div>
                 <div className="rightMenu">
@@ -122,6 +123,7 @@ export default function Profile(props) {
                     setChangePage={props.setChangePage}
                     changePage={props.changePage}
                     setHideHome={props.setHideHome}
+                    setHidePage={props.setHidePage}
                     mobileFormat={props.mobileFormat}/>
                 </div>
             </div>

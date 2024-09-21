@@ -1,6 +1,13 @@
-export function navigation(setHideHome, setHidePage, setChangePage){
-    const path = window.location.pathname;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+
+export function navigation(setHideHome, setHidePage, setChangePage){
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get('redirect');
+    let path;
+    redirect ? path = redirect : path = window.location.pathname;
     console.log(path)
     switch (path){
         case '/':
@@ -42,6 +49,7 @@ export function navigation(setHideHome, setHidePage, setChangePage){
           return;
 
         case '/Solong':
+          console.log('hello from solong')
             setChangePage({
                 change: true,
                 name: "So long"
@@ -89,11 +97,13 @@ export function navigation(setHideHome, setHidePage, setChangePage){
             })
             setHideHome(true);
           return;
-    }
+        }
+    console.log('shouldbe404')
+    return (404)
 }
 
 export function pushHistory(path){
-    console.log('win=', window.location.pathname, 'path=' ,path)
+
     if (window.location.pathname === path)
         return
     else

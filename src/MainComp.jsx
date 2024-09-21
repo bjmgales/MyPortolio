@@ -9,18 +9,30 @@ import {pushHistory} from "./nav";
 
 
 export default function MainComp(){
-    const [hideHome, setHideHome] = useState(false);
+    const [hideHome, setHideHome] = useState(true);
     const [hidePage, setHidePage] = useState(true);
+    const [isMounted, setIsMounted] = useState(false)
     const [mobileFormat, setMobileFormat] = useState(window.innerWidth <= 1600);
     const [changePage, setChangePage] = useState({
         change: false,
         name: ""
     });
 
-    const handleRedirect = ()=>{navigation(setHideHome, setHidePage, setChangePage);}
+    const handleRedirect = () =>{navigation(setHideHome, setHidePage, setChangePage);}
+    const handleLoad = ()=>{
+        console.log(window.location.pathname)
+            if (navigation(setHideHome, setHidePage, setChangePage) === 404){
+                    console.log('in If after 404 from navigation')
+                    window.location.href = '/redir404.html';
+            }
+            else{
+                pushHistory(window.location.pathname)
+            }
+    }
     const handleResize = () => {setMobileFormat(window.innerWidth <= 1600);}
 
     useEffect(() =>{
+        handleLoad()
         window.addEventListener('resize', handleResize);
         window.addEventListener('popstate', handleRedirect);
         return (()=>{
@@ -29,7 +41,7 @@ export default function MainComp(){
         })
     }, [])
 
-    useEffect(()=>{hideHome ? setHidePage(false) : setHidePage(true);   }, [hideHome])
+    // useEffect(()=>{isMounted ? (hideHome ? setHidePage(false) : setHidePage(true)) : setIsMounted(true); console.log('isMounted=', isMounted)   }, [hideHome])
 
     return(
 
@@ -41,11 +53,11 @@ export default function MainComp(){
 
             {
                 !hideHome &&
-                 <Profile setChangePage={setChangePage} changePage={changePage} setHideHome={setHideHome} mobileFormat={mobileFormat}/>
+                 <Profile setChangePage={setChangePage} changePage={changePage} setHideHome={setHideHome} setHidePage={setHidePage} mobileFormat={mobileFormat}/>
             }
 
         {
-            !hidePage &&
+            hidePage == false &&
             <>
             <div className="backArrow">
 

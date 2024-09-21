@@ -61,7 +61,7 @@ ul{
 
 .rightMenu{
   top:38%;
-  left: 108%;
+  right: 8%;
   animation: fadeInRight 2s forwards;
 }
 

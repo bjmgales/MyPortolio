@@ -43,6 +43,7 @@ const Menu = React.memo(function Menu(props) {
         setTimeout(()=>{
             props.setChangePage({change: true, name: cleanAndDisplay.link});
             props.setHideHome(true);
+            props.setHidePage(false)
         }, 800)
     }, [cleanAndDisplay.clean])
 
